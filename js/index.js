@@ -87,7 +87,7 @@ const drawPlane = () => {
   // Etiquetas de los ejes
   canvas.font = "normal 20px Arial";
   canvas.fillStyle = "#cfcfcf";
-  canvas.fillText("X", CANVAS_SIZE, CANVAS_MIDDLE);
+  canvas.fillText("X", CANVAS_SIZE, CANVAS_MIDDLE - 10);
   canvas.fillText("-X", 0, CANVAS_MIDDLE - 10);
   canvas.fillText("Y", CANVAS_MIDDLE - 20, 20);
   canvas.fillText("-Y", CANVAS_MIDDLE - 25, CANVAS_SIZE);
@@ -127,9 +127,12 @@ const drawPolygon = (canvas, points) => {
   canvas.closePath();
 };
 
+// Función para validar el input
+const validateInput = (value) => value !== "" && !isNaN(value);
+
 // Función para trasladar el polígono
 const translatePolygon = (x, y) => {
-  if (validateInput(x, MIN, MAX) && validateInput(y, MIN, MAX)) {
+  if (validateInput(x) && validateInput(y)) {
     for (let i = 0; i < polygonArray.length; i++) {
       polygonArray[i][0] += x; // Trasladar en la dirección X
       polygonArray[i][1] += y; // Trasladar en la dirección Y
@@ -141,7 +144,7 @@ const translatePolygon = (x, y) => {
 
 // Función para escalar el polígono
 const scalePolygon = (scaleFactor) => {
-  if (validateInput(scaleFactor, 0, 100)) {
+  if (validateInput(scaleFactor)) {
     for (let i = 0; i < polygonArray.length; i++) {
       polygonArray[i][0] *= scaleFactor; // Escalar en la dirección X
       polygonArray[i][1] *= scaleFactor; // Escalar en la dirección Y
@@ -153,14 +156,20 @@ const scalePolygon = (scaleFactor) => {
 
 // Función para rotar el polígono en radianes
 const rotatePolygon = (angleDegrees) => {
-  if (validateInput(angleDegrees, -180, 180)) {
+  if (validateInput(angleDegrees)) {
     const radians = (angleDegrees * Math.PI) / 180; // Convertir a radianes
-    
+
     for (let i = 0; i < polygonArray.length; i++) {
       const [x, y] = polygonArray[i];
-      polygonArray[i][0] = (x * Math.cos(radians) - y * Math.sin(radians)).toFixed(2);
-      polygonArray[i][1] = (x * Math.sin(radians) + y * Math.cos(radians)).toFixed(2);
-    }    
+      polygonArray[i][0] = (
+        x * Math.cos(radians) -
+        y * Math.sin(radians)
+      ).toFixed(2);
+      polygonArray[i][1] = (
+        x * Math.sin(radians) +
+        y * Math.cos(radians)
+      ).toFixed(2);
+    }
   } else {
     alert("Debe ingresar un valor válido para la rotación.");
   }
@@ -168,7 +177,7 @@ const rotatePolygon = (angleDegrees) => {
 
 // Función para sesgar el polígono en el eje X
 const shearInX = (shearFactorX) => {
-  if (validateInput(shearFactorX, MIN, MAX)) {
+  if (validateInput(shearFactorX)) {
     for (let i = 0; i < polygonArray.length; i++) {
       const [x, y] = polygonArray[i];
       polygonArray[i][0] = x + shearFactorX * y;
@@ -180,7 +189,7 @@ const shearInX = (shearFactorX) => {
 
 // Función para sesgar el polígono en el eje Y
 const shearInY = (shearFactorY) => {
-  if (validateInput(shearFactorY, MIN, MAX)) {
+  if (validateInput(shearFactorY)) {
     for (let i = 0; i < polygonArray.length; i++) {
       const [x, y] = polygonArray[i];
       polygonArray[i][1] = y + shearFactorY * x;
@@ -210,10 +219,6 @@ const clearAndRefreshTable = () => {
   }
 };
 
-// Función para validar el input
-const validateInput = (value, min, max) =>
-  value >= min && value <= max && value !== "" && !isNaN(value);
-
 // Función para dibujar el polígono
 btnDrawPolygon.addEventListener("click", () => {
   let isValid = true; // Variable de control para rastrear la validación de todas las unidades
@@ -230,8 +235,8 @@ btnDrawPolygon.addEventListener("click", () => {
       const x = parseInt(xInput.value);
       const y = parseInt(yInput.value);
 
-      // Validar que los puntos estén dentro del rango
-      if (!validateInput(x, MIN, MAX) || !validateInput(y, MIN, MAX)) {
+      // Validar los campos
+      if (!validateInput(x) || !validateInput(y)) {
         isValid = false; // Un punto no cumple con la validación
         polygonArray.length = 0; // Vaciar el array
         break; // Salir del bucle
@@ -255,9 +260,11 @@ btnDrawPolygon.addEventListener("click", () => {
 
 // Aplicar las transformaciones
 btnApplyTransformations.addEventListener("click", () => {
+  console.log(polygonArray); // Visualizar el array en la consola
+
   if (translationOption) {
-    const translationX = parseInt(translateX.value) || 0;
-    const translationY = parseInt(transalateY.value) || 0;
+    const translationX = parseFloat(translateX.value) || 0;
+    const translationY = parseFloat(transalateY.value) || 0;
     translatePolygon(translationX, translationY);
   }
 
