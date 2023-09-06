@@ -1,23 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Graficación</title>
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
+
   <body>
-    <div class="contenedor-principal">
-      <div class="contenedor-canvas">
+    <div class="main-container">
+      <div class="panel-container">
+        <div class="panel polygon-panel">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>X</th>
+                <th>Y</th>
+              </tr>
+            </thead>
+            <tbody id="pointTable">
+              <tr>
+                <td>Punto 1:</td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="-1"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="-1"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Punto 2:</td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="-1"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="1"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Punto 3:</td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="1"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="1"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Punto 4:</td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="1"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="input"
+                    min="-10"
+                    max="10"
+                    value="-1"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Punto 5:</td>
+                <td>
+                  <input type="number" class="input" min="-10" max="10" />
+                </td>
+                <td>
+                  <input type="number" class="input" min="-10" max="10" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel buttons-panel">
+          <button class="btn" id="btnDrawPolygon">Dibujar polígono</button>
+          <button id="btnApplyTransformations" disabled>Aplicar movimiento(s)</button>
+          <button id="btnRestart" disabled>Reiniciar</button>
+        </div>
+
+        <div>
+          <h2>Traslación</h2>
+          <div class="panel translation-panel">
+            <input type="checkbox" class="cb" id="cbTranslation" />
+
+            <div>
+              <label for="translateX">X: </label>
+              <input
+                type="number"
+                class="input"
+                id="translateX"
+                min="-10"
+                max="10"
+                disabled
+              />
+            </div>
+
+            <div>
+              <label for="translateY">Y: </label>
+              <input
+                type="number"
+                class="input"
+                id="translateY"
+                min="-10"
+                max="10"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Escalamiento</h2>
+          <div class="panel scaling-panel">
+            <input type="checkbox" class="cb" id="cbScale" />
+
+            <div>
+              <label for="scaleValue">Nivel de escala: </label>
+              <input
+                type="number"
+                class="input"
+                id="scaleValue"
+                min="-10"
+                max="10"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Rotación</h2>
+          <div class="panel rotation-panel">
+            <input type="checkbox" class="cb" id="cbRotation" />
+
+            <div>
+              <label for="rotationValue">Grado de rotación: </label>
+              <input
+                type="number"
+                class="input"
+                id="rotationValue"
+                min="-180"
+                max="180"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Sesgado</h2>
+          <div class="panel biased-panel">
+            <input type="checkbox" class="cb" id="cbShear" />
+
+            <div>
+              <label for="shearX">X: </label>
+              <input
+                type="number"
+                class="input"
+                id="shearX"
+                min="-10"
+                max="10"
+                disabled
+              />
+            </div>
+
+            <div>
+              <label for="shearY">Y: </label>
+              <input
+                type="number"
+                class="input"
+                id="shearY"
+                min="-10"
+                max="10"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas-container">
         <canvas
-          class="pCartesiano"
-          id="pCartesiano"
-          width="600px"
-          height="600px"
+          class="canvas"
+          id="canvas"
+          width="615px"
+          height="615px"
         ></canvas>
       </div>
     </div>
 
-    <script src="./index.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>
