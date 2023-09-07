@@ -161,15 +161,12 @@ const rotatePolygon = (angleDegrees) => {
 
     for (let i = 0; i < polygonArray.length; i++) {
       const [x, y] = polygonArray[i];
-      polygonArray[i][0] = (
-        x * Math.cos(radians) -
-        y * Math.sin(radians)
-      ).toFixed(2);
-      polygonArray[i][1] = (
-        x * Math.sin(radians) +
-        y * Math.cos(radians)
-      ).toFixed(2);
-    }
+      const newX = x * Math.cos(radians) - y * Math.sin(radians);
+      const newY = x * Math.sin(radians) + y * Math.cos(radians);
+      // Redondear a 2 decimales y convertir a número
+      polygonArray[i][0] = parseFloat(newX.toFixed(2));
+      polygonArray[i][1] = parseFloat(newY.toFixed(2));
+    }    
   } else {
     alert("Debe ingresar un valor válido para la rotación.");
   }
